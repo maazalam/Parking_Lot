@@ -67,20 +67,20 @@ public class UsersResource {
 	public Map<String, Boolean> freeParking(@RequestBody Car car) {
 		Map<String, Boolean> map = new HashMap<>();
 		String registrationNumber = car.getRegistrationNumber();
-
-		Car c = UsersRepository.findByRegistrationNumber(registrationNumber);
-		if (c.equals(c)) {
-			parkingModel.freeParking(c.getLevel(), c.getSlot());
-			UsersRepository.delete(c);
-		    map.put("Status", true);
+		List<Car> c = new ArrayList<>();
+		c = UsersRepository.findByRegistrationNumber(registrationNumber);
+		for (Car ci : c) {
+			if (ci.getRegistrationNumber().equals(registrationNumber))
+				parkingModel.freeParking(ci.getLevel(), ci.getSlot());
+			UsersRepository.delete(ci);
+			map.put("Status", true);
 			return map;
-		} else {
-			map.put("Status", false);
 		}
+
 		return map;
 	}
-	
-	@GetMapping(value = "/admin{registrationNumber}")
+
+	@GetMapping(value = "/parking/_search{registrationNumber}")
 	public Map<String, Integer> search1(@PathVariable(value = "registrationNumber") String registrationNumber) {
 		Map<String, Integer> map = new HashMap<>();
 		int slotNo = UsersRepository.getSlotNoFromRegistration(registrationNumber);
@@ -88,14 +88,14 @@ public class UsersResource {
 		return map;
 	}
 
-	@GetMapping(value = "/admin/getRegistration/{color}")
+	@GetMapping(value = "/parking/_search/getRegistration/{color}")
 	public List<String> search2(@PathVariable(value = "color") String color) {
 		List<String> list = new ArrayList<>();
 		list = UsersRepository.getAllRegistrationFromColor(color);
 		return list;
 	}
 
-	@GetMapping(value = "/admin/getSlot/{color}")
+	@GetMapping(value = "/parking/_search/getSlot/{color}")
 	public List<Integer> search3(@PathVariable(value = "color") String color) {
 		List<Integer> list = new ArrayList<>();
 		list = UsersRepository.getAllSlotFromColor(color);

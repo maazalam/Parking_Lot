@@ -12,7 +12,7 @@ import com.mst.parkinglot.entity.Car;
 public interface UsersRepository extends CrudRepository<Car, Long> {
 
 	@Query("SELECT DISTINCT(c) FROM Car c WHERE c.registrationNumber=registrationNumber")
-	Car findByRegistrationNumber(String registrationNumber);
+	List<Car> findByRegistrationNumber(String registrationNumber);
 	
 	@Query("SELECT slot FROM Car WHERE registrationNumber=registrationNumber")
 	int getSlotNoFromRegistration(String registrationNumber);
