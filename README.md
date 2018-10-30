@@ -74,10 +74,10 @@ Free Parking lot
 Search Parking lot
     
     1-Registration numbers of all cars of a particular colour.
-    URI: /api/parking/_search{registrationNumber}
+    URI: /api/parking/_search/getRegistration/{color}
 
     2-Slot number in which a car with a given registration number is parked.
-    URI: /api/parking/_search/getRegistration/{color}
+    URI: /api/parking/_search{registrationNumber}
     
     3-Slot numbers of all slots where a car of a particular colour is parked
     URI: /api/parking/_search/getSlot/{color}
